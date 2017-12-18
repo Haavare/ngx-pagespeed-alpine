@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+  nginx:
+    build: .
+    network_mode: bridge
+
+  exporter:
+    image: wjkohnen/nginx_exporter:v0.1.0
+    links:
+    - nginx
+    command: "-nginx.scrape_uri=http://nginx/nginx_status"
+    ports:
+    - 9113:9113
+    network_mode: bridge
